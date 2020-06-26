@@ -1,0 +1,10 @@
+#
+# ** THIS IS AN AUTO-GENERATED FILE **
+#
+
+# Default Kibana configuration for docker target
+server.name: kibana
+server.host: "0"
+elasticsearch.hosts: [ "http://elasticsearch:9200" ]
+monitoring.ui.container.elasticsearch.enabled: true
+# xpack.encryptedSavedObjects.encryptionKey: +Rb5rBVLU8xIneE0Gj7y7MJpN6t8PNIfhYEv7l0dtAwvHsYSa5E1oq4b1V76tcBrdWD8mC9i/6TKLHFMgDFKhdLoStTcSkEPl3Kf3HtJRdpjHAJSWh1KJswa9KDE0A==%

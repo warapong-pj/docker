@@ -1,0 +1,30 @@
+version: '3'
+
+services: 
+  elasticsearch:
+    image: elastic/elasticsearch:7.7.1
+    ports: 
+      - 9200:9200
+    environment: 
+      - "discovery.type=single-node"
+      - "node.name=elasticsearch"
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes: 
+      - ./elasticsearch:/usr/share/elasticsearch/config
+  apm:
+    image: elastic/apm-server:7.7.1
+    ports: 
+      - 8200:8200
+    volumes: 
+      - ./apm-server:/usr/share/apm-server
+  kibana:
+    image: elastic/kibana:7.7.1
+    volumes: 
+      - ./kibana:/usr/share/kibana/config
+    ports: 
+      - 5601:5601
+    depends_on: 
+      - elasticsearch
+    links: 
+      - elasticsearch
