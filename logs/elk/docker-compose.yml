@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  elasticsearch: 
+    image: elastic/elasticsearch:7.7.1
+    ports: 
+      - 9200:9200
+    environment: 
+      - "discovery.type=single-node"
+      - "node.name=elasticsearch"
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  kibana:
+    image: elastic/kibana:7.7.1
+    ports: 
+      - 5601:5601
+  logstash:
+    image: elastic/logstash:7.7.1
+    ports: 
+      - 5044:5044
