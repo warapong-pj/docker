@@ -1,8 +1,10 @@
 version: '3'
 
 services: 
+  # Elastic Search
   elasticsearch:
     image: elastic/elasticsearch:7.7.1
+    restart: always
     ports: 
       - 9200:9200
     environment: 
@@ -12,14 +14,20 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes: 
       - elasticsearch:/usr/share/elasticsearch/config
+
+  # Elastic APM
   apm:
     image: elastic/apm-server:7.7.1
+    restart: always
     ports: 
       - 8200:8200
     volumes: 
       - apm-server:/usr/share/apm-server
+      
+  # Elastic Kibana
   kibana:
     image: elastic/kibana:7.7.1
+    restart: always
     volumes: 
       - kibana:/usr/share/kibana/config
     ports: 
@@ -30,6 +38,6 @@ services:
       - elasticsearch
 
 volumes: 
-  - elasticsearch:
-  - apm:
-  - kibana:
+  elasticsearch:
+  apm-server:
+  kibana:
