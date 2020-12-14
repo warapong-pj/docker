@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  kong:
+    image: kong:2.1.3-alpine
+    environment:
+      - "KONG_PG_HOST=postgres"
+      - "KONG_DATABASE=postgres"
+      - "KONG_PG_DATABASE=kong"
+      - "KONG_PG_USER=kong"
+      - "KONG_PG_PASSWORD=kong"
+      - "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl"
+    ports:
+      - 80:80
+      - 443:443
+      - 8001:8001
+    depends_on:
+      - postgres
+  # kong-migrate:
+  #   image: kong:2.1.3-alpine
+  #   environment:
+  #     - "KONG_PG_HOST=postgres"
+  #     - "KONG_DATABASE=postgres"
+  #     - "KONG_PG_DATABASE=kong"
+  #     - "KONG_PG_USER=kong"
+  #     - "KONG_PG_PASSWORD=kong"
+  #   command: kong migrations bootstrap
+  #   depends_on:
+  #     - postgres
+  postgres:
+    image: postgres:9.6.19-alpine
+    environment:
+      - "POSTGRES_DB=kong"
+      - "POSTGRES_USER=kong"
+      - "POSTGRES_PASSWORD=kong"
+    ports:
+      - 5432:5432
+  konga:
+    image: pantsel/konga:0.14.7
+    environment:
+      - "DB_ADAPTER=postgres"
+      - "DB_HOST=postgres"
+      - "DB_DATABASE=kong"
+      - "DB_USER=kong"
+      - "DB_PASSWORD=kong"
+    ports:
+      - 1337:1337
+    depends_on:
+      - postgres
+      - kong
