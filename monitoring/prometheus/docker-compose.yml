@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  # Redis
+  redis-exporter:
+    image: oliver006/redis_exporter:v1.6.1-alpine
+    restart: always
+    command:
+      - "-include-system-metrics=true"
+  # MySQL
+  mysql-exporter:
+    image: prom/mysqld-exporter:v0.11.0
+    restart: always
+    environment:
+      - "DATA_SOURCE_NAME=exporter:password@(server:3306)/"
+  # Memcached
+  memcached-exporter:
+    image: quay.io/prometheus/memcached-exporter:v0.5.0
+    restart: always
+    command:
+      - "--memcached.address=server:11211"
+  # Blackbox
+  blackbox-exporter:
+    image: prom/blackbox-exporter:v0.15.1
+    restart: always
+  # Prometheus
+  prometheus:
+    image: prom/prometheus:v2.16.0
+    restart: always
+    ports:
+      - 9090:9090
+    volumes: 
+      - ./prometheus:/etc/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-lifecycle"
+      - "--storage.tsdb.retention.time=30d"
+  # Grafana
+  grafana:
+    image: grafana/grafana:7.0.3
+    restart: always
+    ports:
+      - 3000:3000
+    volumes: 
+      - grafana:/usr/share/grafana
+  # Alertmanager
+  alertmanager:
+    image: prom/alertmanager:v0.20.0
+    restart: always
+    ports:
+    - 9093:9093
+    volumes: 
+      - alertmanager:/etc/alertmanager/
+
+volumes: 
+  prometheus:
+  grafana:
+  alertmanager:
