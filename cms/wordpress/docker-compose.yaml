@@ -1,43 +1,39 @@
 version: '3'
 
 services:
-  db:
+  mysql:
     image: mariadb:10.3
     volumes:
-      - db_data:/var/lib/mysql
+      - mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=wordpress
       - MYSQL_USER=wordpress
       - MYSQL_PASSWORD=wordpress
-      - TZ=Asia/Bangkok
-  php:
+
+  wordpress:
     image: wordpress:5.2-php7.2-fpm-alpine
-    depends_on:
-      - db
     environment:
-      - WORDPRESS_DB_HOST=db:3306
+      - WORDPRESS_DB_HOST=mysql:3306
       - WORDPRESS_DB_NAME=wordpress
       - WORDPRESS_DB_USER=wordpress
       - WORDPRESS_DB_PASSWORD=wordpress
-      - TZ=Asia/Bangkok
     volumes:
-      - php_data:/var/www/html
-    links:
-      - db
-  web:
-    image: nginx:1.16-alpine
-    environment:
-      - TZ=Asia/Bangkok
+      - wordpress:/var/www/html
     depends_on:
-      - php
+      - mysql
+
+  nginx:
+    image: nginx:1.16-alpine
     ports:
       - 10080:80
       - 10443:443
     volumes:
-      - php_data:/var/www/html
+      - wordpress:/var/www/html
       - ./conf:/etc/nginx/conf.d
+    depends_on:
+      - wordpress
 
 volumes:
-  php_data:
-  db_data:
+  wordpress:
+  mysql:

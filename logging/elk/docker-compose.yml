@@ -2,24 +2,28 @@ version: '3'
 
 services:
   elasticsearch: 
-    image: elastic/elasticsearch:7.7.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3-amd64
     ports: 
       - 9200:9200
     volumes:
-      - elasticsearch_data:/usr/share/elasticsearch/data
+      - elasticsearch:/usr/share/elasticsearch/data
     environment: 
       - "discovery.type=single-node"
       - "node.name=elasticsearch"
       - "bootstrap.memory_lock=true"
-      - "ES_JAVA_OPTS=-Xmx1g -Xmx1g"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
   kibana:
-    image: elastic/kibana:7.7.1
+    image: docker.elastic.co/kibana/kibana:7.9.3
     ports: 
       - 5601:5601
+    depends_on:
+      - elasticsearch
+
   logstash:
-    image: elastic/logstash:7.7.1
+    image: docker.elastic.co/logstash/logstash:7.9.3
     ports: 
       - 5044:5044
 
 volumes:
-  elasticsearch_data:
+  elasticsearch:

@@ -1,9 +1,8 @@
 version: '3'
 
 services: 
-  # Elastic Search
   elasticsearch:
-    image: elastic/elasticsearch:7.7.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3-amd64
     restart: always
     ports: 
       - 9200:9200
@@ -15,29 +14,23 @@ services:
     volumes: 
       - elasticsearch:/usr/share/elasticsearch/config
 
-  # Elastic APM
   apm:
-    image: elastic/apm-server:7.7.1
+    image: docker.elastic.co/apm/apm-server:7.9.3
     restart: always
     ports: 
       - 8200:8200
-    volumes: 
-      - apm-server:/usr/share/apm-server
-      
-  # Elastic Kibana
+    command: >
+       apm-server -e
+         -E output.elasticsearch.hosts=["elasticsearch:9200"]
+
   kibana:
-    image: elastic/kibana:7.7.1
+    image: docker.elastic.co/kibana/kibana:7.9.3
     restart: always
-    volumes: 
-      - kibana:/usr/share/kibana/config
     ports: 
       - 5601:5601
     depends_on: 
-      - elasticsearch
-    links: 
       - elasticsearch
 
 volumes: 
   elasticsearch:
   apm-server:
-  kibana:

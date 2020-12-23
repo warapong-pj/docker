@@ -1,7 +1,6 @@
 version: '3'
 
 services:
-  # Jaeger Collector
   collector:
     image: jaegertracing/jaeger-collector:1.18.0
     restart: always
@@ -13,7 +12,6 @@ services:
     depends_on:
       - elasticsearch
 
-  # Jaeger UI
   query:
     image: jaegertracing/jaeger-query:1.18.0
     restart: always
@@ -25,7 +23,6 @@ services:
     depends_on:
       - elasticsearch
 
-  # Jaeger Agent
   agent:
     image: jaegertracing/jaeger-agent:1.18.0
     restart: always
@@ -34,16 +31,20 @@ services:
     command:
       - --reporter.grpc.host-port=collector:14250
   
-  # Elastic Search
+  
   elasticsearch:
-    image: elasticsearch:7.5.2
-    environment:
-      - "node.name=es01"
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3-amd64
+    restart: always
+    ports: 
+      - 9200:9200
+    environment: 
       - "discovery.type=single-node"
+      - "node.name=elasticsearch"
       - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  
-  # Spark Dependencies
+    volumes: 
+      - elasticsearch:/usr/share/elasticsearch/config
+
   diagram:
     image: jaegertracing/spark-dependencies:latest
     environment:
@@ -51,13 +52,5 @@ services:
       - "ES_NODES=http://elasticsearch:9200"
       - "JAVA_OPTS=-Xmx512m"
 
-  # # Sample Application
-  # application:
-  #   image: jaegertracing/example-hotrod
-  #   environment:
-  #     - "JAEGER_AGENT_HOST=agent"
-  #     - "JAEGER_AGENT_PORT=6831"
-  #   ports:
-  #     - 8080:8080
-  #   command:
-  #     - all
+volumes: 
+  elasticsearch:
