@@ -31,7 +31,6 @@ services:
     command:
       - --reporter.grpc.host-port=collector:14250
   
-  
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3-amd64
     restart: always

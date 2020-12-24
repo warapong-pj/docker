@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  openldap:
+    image: osixia/openldap:1.3.0-amd64
+    hostname: ldap.demo.local
+    environment:
+      - LDAP_ORGANISATION=demo
+      - LDAP_DOMAIN=demo.local
+      - LDAP_ADMIN_PASSWORD=admin
+    ports: 
+      - 389:389
+      - 636:636
+  phpldap:
+    image: osixia/phpldapadmin:0.7.2
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=openldap
+    ports:
+      - 443:443
+  keycloak:
+    image: jboss/keycloak:11.0.3
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+    ports:
+      - 8080:8080
