@@ -2,22 +2,22 @@ version: '3'
 
 services:
   mysql:
-    image: mariadb:10.3
+    image: mysql:5.7.32
     volumes:
       - mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=wordpress
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
 
   wordpress:
     image: wordpress:5.2-php7.2-fpm-alpine
     environment:
       - WORDPRESS_DB_HOST=mysql:3306
       - WORDPRESS_DB_NAME=wordpress
-      - WORDPRESS_DB_USER=wordpress
-      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_USER=admin
+      - WORDPRESS_DB_PASSWORD=admin
     volumes:
       - wordpress:/var/www/html
     depends_on:
@@ -26,8 +26,8 @@ services:
   nginx:
     image: nginx:1.16-alpine
     ports:
-      - 10080:80
-      - 10443:443
+      - 80:80
+      - 443:443
     volumes:
       - wordpress:/var/www/html
       - ./conf:/etc/nginx/conf.d

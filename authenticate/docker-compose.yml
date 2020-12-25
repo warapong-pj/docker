@@ -17,10 +17,30 @@ services:
       - PHPLDAPADMIN_LDAP_HOSTS=openldap
     ports:
       - 443:443
+    depends_on:
+      - openldap
   keycloak:
     image: jboss/keycloak:11.0.3
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=mysql
+      - DB_ADDR=mariadb
+      - DB_USER=admin
+      - DB_PASSWORD=admin
     ports:
       - 8080:8080
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:5.7.32
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=keycloak
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
