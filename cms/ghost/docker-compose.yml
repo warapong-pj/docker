@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  ghost:
+    image: ghost:3.40.2-alpine
+    environment:
+      - database__client=mysql
+      - database__connection__host=mysql
+      - database__connection__database=ghost
+      - database__connection__user=admin
+      - database__connection__password=admin
+      # this url value is just an example, and is likely wrong for your environment!
+      # - url=http://localhost:2368
+    ports:
+      - 2368:2368
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:5.7.32
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ghost
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
