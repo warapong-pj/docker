@@ -1,0 +1,48 @@
+version: "3"
+
+services: 
+  web:
+    image: gitlab/gitlab-ce:13.9.5-ce.0
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # external_url 'https://gitlab.example.com'
+        # Add any other gitlab.rb configuration here, each on its own line
+        postgresql['enable'] = true
+        gitlab_rails['db_adapter'] = 'postgresql'
+        gitlab_rails['db_encoding'] = 'utf8'
+        gitlab_rails['db_host'] = 'postgres'
+        gitlab_rails['db_port'] = 5432
+        gitlab_rails['db_database'] = "gitlab"
+        gitlab_rails['db_username'] = 'admin'
+        gitlab_rails['db_password'] = 'admin'
+        redis['enable'] = true
+        gitlab_rails['redis_host'] = 'redis'
+        gitlab_rails['redis_port'] = 6379
+        grafana['enable'] = false
+        logrotate['enable'] = false
+    ports:
+      - '10080:80'
+      - '10443:443'
+      - '10022:22'
+    volumes:
+      - config:/etc/gitlab
+      - logs:/var/log/gitlab
+      - data:/var/opt/gitlab
+    depends_on: 
+      - postgres
+      - redis
+  postgres:
+    image: postgres:12.6-alpine
+    ports: 
+      - '5432:5432'
+    environment: 
+      - POSTGRES_DB=gitlab
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+  redis:
+    image: redis:6.2.1-alpine
+
+volumes: 
+  config:
+  logs:
+  data:
