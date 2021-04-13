@@ -5,8 +5,12 @@ services:
     image: gitlab/gitlab-ce:13.9.5-ce.0
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        # external_url 'https://gitlab.example.com'
+        external_url 'http://gitlab.example.com'
         # Add any other gitlab.rb configuration here, each on its own line
+        puma['enable'] = true
+        puma['worker_processes'] = 1
+        puma['min_threads'] = 1
+        puma['max_threads'] = 4
         postgresql['enable'] = true
         gitlab_rails['db_adapter'] = 'postgresql'
         gitlab_rails['db_encoding'] = 'utf8'
@@ -19,6 +23,9 @@ services:
         gitlab_rails['redis_host'] = 'redis'
         gitlab_rails['redis_port'] = 6379
         grafana['enable'] = false
+        node_exporter['flags'] = {
+          'collector.mountstats' => false,
+        }
         logrotate['enable'] = false
     ports:
       - '10080:80'
@@ -28,13 +35,14 @@ services:
       - config:/etc/gitlab
       - logs:/var/log/gitlab
       - data:/var/opt/gitlab
+    # user: git:git
     depends_on: 
       - postgres
       - redis
   postgres:
     image: postgres:12.6-alpine
     ports: 
-      - '5432:5432'
+      - '15432:5432'
     environment: 
       - POSTGRES_DB=gitlab
       - POSTGRES_USER=admin
