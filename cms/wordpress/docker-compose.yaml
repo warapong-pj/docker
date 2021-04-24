@@ -11,7 +11,7 @@ services:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=admin
 
-  wordpress:
+  php:
     image: wordpress:5.2-php7.2-fpm-alpine
     environment:
       - WORDPRESS_DB_HOST=mysql:3306
@@ -23,7 +23,7 @@ services:
     depends_on:
       - mysql
 
-  nginx:
+  web:
     image: nginx:1.16-alpine
     ports:
       - 80:80
@@ -32,7 +32,7 @@ services:
       - wordpress_web:/var/www/html
       - ./conf:/etc/nginx/conf.d
     depends_on:
-      - wordpress
+      - php
 
 volumes:
   wordpress_web:
