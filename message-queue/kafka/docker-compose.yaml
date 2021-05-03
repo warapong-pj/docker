@@ -5,7 +5,8 @@ services:
     image: bitnami/zookeeper:3.7.0
     environment:
     - ZOO_SERVER_ID=1
-    - ZOO_SERVERS=0.0.0.0:2888:3888
+    # - ZOO_SERVERS=0.0.0.0:2888:3888
+    - ZOO_SERVERS=0.0.0.0:2888:3888,zookeeper2:2888:3888,zookeeper3:2888:3888
     - ALLOW_ANONYMOUS_LOGIN=yes
     # - ZOO_ENABLE_AUTH=yes
     # - ZOO_SERVER_USERS=zookeeper
@@ -14,6 +15,18 @@ services:
     # - ZOO_CLIENT_PASSWORD=kafka
     ports:
     - 2181:2181
+  zookeeper2:
+    image: bitnami/zookeeper:3.7.0
+    environment:
+    - ZOO_SERVER_ID=2
+    - ZOO_SERVERS=zookeeper1:2888:3888,0.0.0.0:2888:3888,zookeeper3:2888:3888
+    - ALLOW_ANONYMOUS_LOGIN=yes
+  zookeeper3:
+    image: bitnami/zookeeper:3.7.0
+    environment:
+    - ZOO_SERVER_ID=3
+    - ZOO_SERVERS=zookeeper1:2888:3888,zookeeper2:2888:3888,0.0.0.0:2888:3888
+    - ALLOW_ANONYMOUS_LOGIN=yes
   kafka:
     image: bitnami/kafka:2.7.0
     environment:
@@ -22,6 +35,5 @@ services:
     - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
     - KAFKA_ZOOKEEPER_CONNECT=zookeeper1:2181
     - ALLOW_PLAINTEXT_LISTENER=yes
-    # - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
     ports: 
     - 9092:9092
