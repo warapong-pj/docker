@@ -1,5 +1,13 @@
 ***REMOVED*** airflow
 
+***REMOVED******REMOVED******REMOVED*** pre task before start project
+- create airflow user on xspector postgres
+```
+CREATE DATABASE airflow;
+CREATE USER airflow WITH ENCRYPTED PASSWORD 'airflow';
+GRANT ALL PRIVILEGES ON DATABASE airflow TO airflow;
+```
+
 ***REMOVED******REMOVED******REMOVED*** how to start project
 1. run migrate airflow database `docker compose up airflow-init`
 2. start airflow stack `docker compose up -d`
