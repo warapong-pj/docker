@@ -1,0 +1,75 @@
+***REMOVED***
+
+***REMOVED***
+  systemd_exporter:
+    image: prometheuscommunity/systemd-exporter:v0.5.0
+***REMOVED***
+      - --log.level=info
+      - --path.procfs=/host/proc
+  ***REMOVED***
+      - /proc:/host/proc:ro
+      - /run/systemd:/run/systemd:ro
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro
+***REMOVED***
+      - 19558:9558
+    privileged: true
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:v1.5.0
+***REMOVED***
+      - '--path.rootfs=/host'
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.systemd'
+***REMOVED***      - '--log.level=debug'
+***REMOVED***    network_mode: host
+    pid: host
+    restart: unless-stopped
+***REMOVED***
+      - 19100:9100
+  ***REMOVED***
+       - '/:/host:ro,rslave'
+       - '/var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro,rslave'
+    privileged: true
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.1
+***REMOVED******REMOVED***
+***REMOVED***      - 8080:8080
+  ***REMOVED***
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+
+***REMOVED***  redis-exporter:
+***REMOVED***    image: oliver006/redis_exporter:v1.45.0
+***REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED***      - "-include-system-metrics=true"
+
+  prometheus:
+    image: quay.io/prometheus/prometheus:v2.41.0
+***REMOVED***
+***REMOVED***
+      - 19090:9090
+  ***REMOVED***
+     - prometheus_data:/etc/prometheus
+      ***REMOVED*** - ./prometheus:/etc/prometheus
+***REMOVED***
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-lifecycle"
+      - "--storage.tsdb.retention.time=7d"
+
+  grafana:
+    image: grafana/grafana-oss:9.3.2-ubuntu
+***REMOVED***
+***REMOVED***
+      - 13000:3000
+  ***REMOVED***
+      - grafana_data:/var/lib/grafana
+
+***REMOVED***
+  prometheus_data:
+  grafana_data:
