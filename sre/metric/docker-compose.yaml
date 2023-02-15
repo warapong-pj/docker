@@ -5,9 +5,6 @@ services:
     image: quay.io/prometheus/node-exporter:v1.5.0
     command:
       - '--path.rootfs=/host'
-    ports:
-      - 9100:9100
-    # network_mode: host
     pid: host
     restart: unless-stopped
     volumes:
@@ -18,7 +15,7 @@ services:
     restart: always
     ports:
       - 9090:9090
-    volumes: 
+    volumes:
       - ./prometheus:/etc/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
