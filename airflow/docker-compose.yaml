@@ -51,28 +51,32 @@
 ***REMOVED***
   ***REMOVED***-env
 ***REMOVED***
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+***REMOVED***
     ***REMOVED*** For backward compatibility, with Airflow <2.3
-    AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
-    AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
-***REMOVED***
-    - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
+***REMOVED***
+***REMOVED***    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+***REMOVED***
+***REMOVED***    - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
+***REMOVED***
+***REMOVED***    - airflow-dags-volume:/opt/airflow/dags
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***  user: ubuntu:ubuntu
 
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-      - 8080:8080
+***REMOVED***
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
@@ -255,6 +259,23 @@
 ***REMOVED***
 
 ***REMOVED***
+***REMOVED***
+***REMOVED***
+  ***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+  ***REMOVED***
+***REMOVED***      - /tmp/airflow_dag:/tmp/git
+***REMOVED***
+***REMOVED***
+***REMOVED***
+
+***REMOVED***
+***REMOVED***  airflow-dags-volume:
 ***REMOVED***
 
 ***REMOVED***
