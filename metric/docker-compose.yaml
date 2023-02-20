@@ -4,6 +4,7 @@
   systemd_exporter:
     image: prometheuscommunity/systemd-exporter:v0.5.0
 ***REMOVED***
+***REMOVED***
       - --log.level=info
       - --path.procfs=/host/proc
   ***REMOVED***
@@ -16,6 +17,7 @@
 
   node_exporter:
     image: quay.io/prometheus/node-exporter:v1.5.0
+***REMOVED***
 ***REMOVED***
       - '--path.rootfs=/host'
       - '--path.procfs=/host/proc'
@@ -34,6 +36,7 @@
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.47.1
+***REMOVED***
 ***REMOVED******REMOVED***
 ***REMOVED***      - 8080:8080
   ***REMOVED***
