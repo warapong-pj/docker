@@ -1,1 +1,1 @@
-***REMOVED*** docker resource
+# docker resource

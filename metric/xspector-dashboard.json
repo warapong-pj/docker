@@ -6,7 +6,7 @@
         "datasource": {
           "type": "grafana",
           "uid": "-- Grafana --"
-***REMOVED***,
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -16,7 +16,7 @@
           "matchAny": false,
           "tags": [],
           "type": "dashboard"
-***REMOVED***,
+        },
         "type": "dashboard"
       }
     ]
@@ -41,12 +41,12 @@
               "legend": false,
               "tooltip": false,
               "viz": false
-    ***REMOVED***,
+            },
             "scaleDistribution": {
               "type": "linear"
-    ***REMOVED***
-  ***REMOVED***
-***REMOVED***,
+            }
+          }
+        },
         "overrides": []
       },
       "gridPos": {
@@ -68,25 +68,25 @@
           "scale": "exponential",
           "scheme": "RdYlGn",
           "steps": 2
-***REMOVED***,
+        },
         "exemplars": {
           "color": "rgba(255,0,255,0.7)"
-***REMOVED***,
+        },
         "filterValues": {},
         "legend": {
           "show": false
-***REMOVED***,
+        },
         "rowsFrame": {
           "layout": "auto"
-***REMOVED***,
+        },
         "tooltip": {
           "show": true,
           "yHistogram": false
-***REMOVED***,
+        },
         "yAxis": {
           "axisPlacement": "left",
           "reverse": false
-***REMOVED***
+        }
       },
       "pluginVersion": "9.3.2",
       "targets": [
@@ -94,13 +94,13 @@
           "datasource": {
             "type": "prometheus",
             "uid": "gbNbbS1Vk"
-  ***REMOVED***,
+          },
           "editorMode": "code",
           "expr": "systemd_unit_state{name=~\"$service\", state=\"active\"}",
           "legendFormat": "{{name}}",
           "range": true,
           "refId": "A"
-***REMOVED***
+        }
       ],
       "title": "Status",
       "type": "heatmap"
@@ -117,7 +117,7 @@
           "selected": false,
           "text": "Prometheus",
           "value": "Prometheus"
-***REMOVED***,
+        },
         "hide": 0,
         "includeAll": false,
         "label": "Prometheus",
@@ -178,11 +178,11 @@
             "sensor-api.service",
             "webrtc.service"
           ]
-***REMOVED***,
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "gbNbbS1Vk"
-***REMOVED***,
+        },
         "definition": "label_values(systemd_unit_state{name=~\".+-api.service|.+-ui.service|reverse-proxy.+|-worker.service|overlay-worker.+|on-request-.+|webrtc.+\"}, name)",
         "hide": 0,
         "includeAll": false,
@@ -193,7 +193,7 @@
         "query": {
           "query": "label_values(systemd_unit_state{name=~\".+-api.service|.+-ui.service|reverse-proxy.+|-worker.service|overlay-worker.+|on-request-.+|webrtc.+\"}, name)",
           "refId": "StandardVariableQuery"
-***REMOVED***,
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
