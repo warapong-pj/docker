@@ -24,4 +24,3 @@ services:
       - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
     depends_on:
       - opensearch
-  
