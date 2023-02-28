@@ -1,4 +1,0 @@
-### airflow ignore directory
-**/dags
-**/logs
-**/plugins
