@@ -1,0 +1,215 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${prometheus}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "calculate": false,
+        "cellGap": 1,
+        "cellValues": {},
+        "color": {
+          "exponent": 0.5,
+          "fill": "green",
+          "mode": "scheme",
+          "reverse": true,
+          "scale": "exponential",
+          "scheme": "RdYlGn",
+          "steps": 2
+        },
+        "exemplars": {
+          "color": "rgba(255,0,255,0.7)"
+        },
+        "filterValues": {},
+        "legend": {
+          "show": false
+        },
+        "rowsFrame": {
+          "layout": "auto"
+        },
+        "tooltip": {
+          "show": true,
+          "yHistogram": false
+        },
+        "yAxis": {
+          "axisPlacement": "left",
+          "reverse": false
+        }
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "gbNbbS1Vk"
+          },
+          "editorMode": "code",
+          "expr": "systemd_unit_state{name=~\"$service\", state=\"active\"}",
+          "legendFormat": "{{name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Status",
+      "type": "heatmap"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "Prometheus",
+          "value": "Prometheus"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Prometheus",
+        "multi": false,
+        "name": "prometheus",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "app-api.service",
+            "gateway-api.service",
+            "livestream-ui.service",
+            "main-ui.service",
+            "nas-api.service",
+            "on-request-record-capture-mic.service",
+            "on-request-record.service",
+            "overlay-api.service",
+            "overlay-ui.service",
+            "overlay-worker-ch1.service",
+            "overlay-worker-ch2.service",
+            "overlay-worker-ch3.service",
+            "overlay-worker-ch4.service",
+            "overlay-worker-overlay-ch1.service",
+            "overlay-worker-overlay-ch2.service",
+            "overlay-worker-overlay-ch3.service",
+            "overlay-worker-overlay-ch4.service",
+            "reverse-proxy.service",
+            "sensor-api.service",
+            "webrtc.service"
+          ],
+          "value": [
+            "app-api.service",
+            "gateway-api.service",
+            "livestream-ui.service",
+            "main-ui.service",
+            "nas-api.service",
+            "on-request-record-capture-mic.service",
+            "on-request-record.service",
+            "overlay-api.service",
+            "overlay-ui.service",
+            "overlay-worker-ch1.service",
+            "overlay-worker-ch2.service",
+            "overlay-worker-ch3.service",
+            "overlay-worker-ch4.service",
+            "overlay-worker-overlay-ch1.service",
+            "overlay-worker-overlay-ch2.service",
+            "overlay-worker-overlay-ch3.service",
+            "overlay-worker-overlay-ch4.service",
+            "reverse-proxy.service",
+            "sensor-api.service",
+            "webrtc.service"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "gbNbbS1Vk"
+        },
+        "definition": "label_values(systemd_unit_state{name=~\".+-api.service|.+-ui.service|reverse-proxy.+|-worker.service|overlay-worker.+|on-request-.+|webrtc.+\"}, name)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Service",
+        "multi": true,
+        "name": "service",
+        "options": [],
+        "query": {
+          "query": "label_values(systemd_unit_state{name=~\".+-api.service|.+-ui.service|reverse-proxy.+|-worker.service|overlay-worker.+|on-request-.+|webrtc.+\"}, name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Xspector",
+  "uid": "5gttYIJVk",
+  "version": 16,
+  "weekStart": ""
+}
