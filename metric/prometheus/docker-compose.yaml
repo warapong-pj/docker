@@ -17,7 +17,6 @@ services:
 
   node_exporter:
     image: quay.io/prometheus/node-exporter:v1.5.0
-    restart: always
     command:
       - '--path.rootfs=/host'
       - '--path.procfs=/host/proc'
@@ -34,17 +33,17 @@ services:
        - '/var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro,rslave'
     privileged: true
 
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.47.1
-    restart: always
-#    ports:
-#      - 8080:8080
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:ro
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-      - /dev/disk/:/dev/disk:ro
+#  cadvisor:
+#    image: gcr.io/cadvisor/cadvisor:v0.47.1
+#    restart: always
+##    ports:
+##      - 8080:8080
+#    volumes:
+#      - /:/rootfs:ro
+#      - /var/run:/var/run:ro
+#      - /sys:/sys:ro
+#      - /var/lib/docker/:/var/lib/docker:ro
+#      - /dev/disk/:/dev/disk:ro
 
 #  redis-exporter:
 #    image: oliver006/redis_exporter:v1.45.0
@@ -58,8 +57,8 @@ services:
     ports:
       - 19090:9090
     volumes:
-     - prometheus_data:/etc/prometheus
-      # - ./prometheus:/etc/prometheus
+#     - prometheus_data:/etc/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--web.enable-lifecycle"
