@@ -1,2 +1,4 @@
-# ignore backup directory
-*_bak
+### airflow ignore directory
+**/dags
+**/logs
+**/plugins

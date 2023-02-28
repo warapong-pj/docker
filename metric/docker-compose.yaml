@@ -1,0 +1,77 @@
+version: '3'
+
+services:
+  systemd_exporter:
+    image: prometheuscommunity/systemd-exporter:v0.5.0
+    restart: always
+    command:
+      - --log.level=info
+      - --path.procfs=/host/proc
+    volumes:
+      - /proc:/host/proc:ro
+      - /run/systemd:/run/systemd:ro
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro
+    ports:
+      - 19558:9558
+    privileged: true
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:v1.5.0
+    command:
+      - '--path.rootfs=/host'
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.systemd'
+#      - '--log.level=debug'
+#    network_mode: host
+    pid: host
+    restart: unless-stopped
+    ports:
+      - 19100:9100
+    volumes:
+       - '/:/host:ro,rslave'
+       - '/var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro,rslave'
+    privileged: true
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.1
+    restart: always
+#    ports:
+#      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+
+#  redis-exporter:
+#    image: oliver006/redis_exporter:v1.45.0
+#    restart: always
+##    command:
+##      - "-include-system-metrics=true"
+
+  prometheus:
+    image: quay.io/prometheus/prometheus:v2.41.0
+    restart: always
+    ports:
+      - 19090:9090
+    volumes:
+     - prometheus_data:/etc/prometheus
+      # - ./prometheus:/etc/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-lifecycle"
+      - "--storage.tsdb.retention.time=7d"
+
+  grafana:
+    image: grafana/grafana-oss:9.3.2-ubuntu
+    restart: always
+    ports:
+      - 13000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  prometheus_data:
+  grafana_data:
