@@ -2,7 +2,7 @@ version: '3'
 
 services:
   opensearch:
-    image: opensearchproject/opensearch:2.4.1
+    image: opensearchproject/opensearch:2.5.0
     environment:
       - discovery.type=single-node
     ports:
@@ -10,17 +10,18 @@ services:
       - 9300:9300
 
   opensearch-dashboard:
-    image: opensearchproject/opensearch-dashboards:2.4.1
-    environment:
-      - OPENSEARCH_HOSTS=["https://opensearch:9200"]
+    image: opensearchproject/opensearch-dashboards:2.5.0
     ports:
       - 5601:5601
+    environment:
+      OPENSEARCH_HOSTS: '["https://opensearch:9200"]'
     depends_on:
       - opensearch
 
   fluent-bit:
-    image: fluent/fluent-bit:1.9.10
+    image: fluent/fluent-bit:2.0.9
     volumes:
       - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - /var/lib/docker/containers:/var/log
     depends_on:
       - opensearch
