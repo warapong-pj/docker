@@ -6,14 +6,14 @@ services:
     command:
       - "--config=/etc/otel-collector.yaml"
     volumes:
-      - ./otel-collector/otel-collector.yaml:/etc/otel-collector.yaml
+      - ./otel-collector.yaml:/etc/otel-collector.yaml
 
   tempo:
     image: grafana/tempo:latest
     command:
       - "-config.file=/etc/tempo.yaml"
     volumes:
-      - ./tempo/tempo.yaml:/etc/tempo.yaml
+      - ./tempo.yaml:/etc/tempo.yaml
     ports:
       - 4317:4317
 
