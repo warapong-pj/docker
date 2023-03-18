@@ -1,20 +1,6 @@
 version: '3'
 
 services:
-  systemd_exporter:
-    image: prometheuscommunity/systemd-exporter:v0.5.0
-    restart: always
-    command:
-      - --log.level=info
-      - --path.procfs=/host/proc
-    volumes:
-      - /proc:/host/proc:ro
-      - /run/systemd:/run/systemd:ro
-      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro
-    ports:
-      - 19558:9558
-    privileged: true
-
   node_exporter:
     image: quay.io/prometheus/node-exporter:v1.5.0
     command:
@@ -44,12 +30,6 @@ services:
 #      - /sys:/sys:ro
 #      - /var/lib/docker/:/var/lib/docker:ro
 #      - /dev/disk/:/dev/disk:ro
-
-#  redis-exporter:
-#    image: oliver006/redis_exporter:v1.45.0
-#    restart: always
-##    command:
-##      - "-include-system-metrics=true"
 
   prometheus:
     image: quay.io/prometheus/prometheus:v2.41.0
