@@ -6,4 +6,4 @@ services:
       memlock: -1
     ports:
       - 6379:6379
-    command: sh -c "/usr/local/bin/dragonfly --logtostderr --proactor_threads=1 --maxmemory=2gb"
+    command: sh -c "/usr/local/bin/dragonfly --logtostderr --requirepass password --proactor_threads=1 --maxmemory=2gb"
