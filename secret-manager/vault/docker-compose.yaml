@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  vault:
+    image: vault:1.13.1
+    environment:
+      VAULT_ADDR: http://0.0.0.0:8200
+    ports:
+      - 8200:8200
+    volumes:
+      - ./vault.json:/vault/config/vault.json
+    entrypoint: vault server -config=/vault/config/vault.json
+    cap_add:
+      - IPC_LOCK
