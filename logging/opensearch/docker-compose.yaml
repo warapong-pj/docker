@@ -22,6 +22,6 @@ services:
     image: fluent/fluent-bit:2.2.1
     volumes:
       - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
-      - /var/lib/docker/containers:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers
     depends_on:
       - opensearch
