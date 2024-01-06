@@ -2,7 +2,7 @@ version: '3'
 
 services:
   opensearch:
-    image: opensearchproject/opensearch:2.5.0
+    image: public.ecr.aws/opensearchproject/opensearch:2.11.1
     environment:
       - discovery.type=single-node
     ports:
@@ -10,7 +10,7 @@ services:
       - 9300:9300
 
   opensearch-dashboard:
-    image: opensearchproject/opensearch-dashboards:2.5.0
+    image: public.ecr.aws/opensearchproject/opensearch-dashboards:2.11.1
     ports:
       - 5601:5601
     environment:
@@ -19,7 +19,7 @@ services:
       - opensearch
 
   fluent-bit:
-    image: fluent/fluent-bit:2.0.9
+    image: fluent/fluent-bit:2.2.1
     volumes:
       - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
       - /var/lib/docker/containers:/var/log
