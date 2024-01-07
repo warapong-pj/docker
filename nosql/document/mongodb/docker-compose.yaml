@@ -2,12 +2,16 @@ version: '3'
 
 services:
   mongodb:
-    image: mongo:5.0.15-focal
+    image: mongodb/mongodb-community-server:7.0.2-ubuntu2204
     ports:
       - 27017:27017
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGODB_INITDB_ROOT_USERNAME=admin
+      - MONGODB_INITDB_ROOT_PASSWORD=admin
     volumes:
-      - ./mongodb-keyfile:/opt/keyfile
-    command: --keyFile /opt/keyfile --replSet rs0
+      - mongodb_data:/data/db
+      - ./mongodb-keyfile:/opt/mongodb-keyfile
+    command: [ "--keyFile", "/opt/mongodb-keyfile", "--replSet", "rs0", "--bind_ip_all" ]
+
+volumes:
+  mongodb_data: {}
