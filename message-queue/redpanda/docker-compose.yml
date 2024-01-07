@@ -1,7 +1,27 @@
 version: '3'
 
 services:
-  # redpanda:
+  redpanda:
+    image: redpandadata/redpanda:v23.2.22
+    ports:
+      - 9092:9092
+    command:
+      - redpanda
+      - start
+      - --smp 1
+      - --memory 1G
+      - --reserve-memory 0M
+      - --node-id 0
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr internal://redpanda:9092,external://localhost:19092
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --advertise-pandaproxy-addr internal://redpanda:8082,external://localhost:18082
+      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:18081
+      - --rpc-addr redpanda:33145
+      - --advertise-rpc-addr redpanda:33145
+      - --default-log-level=info
+
+  # redpanda1:
   #   image: redpandadata/redpanda:v23.1.17
   #   ports:
   #     - 19092:19092
@@ -11,97 +31,78 @@ services:
   #     - --smp 1
   #     - --memory 1G
   #     - --reserve-memory 0M
-  #     - --node-id 0
+  #     - --node-id 1
   #     - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
-  #     - --advertise-kafka-addr internal://redpanda:9092,external://localhost:19092
+  #     - --advertise-kafka-addr internal://redpanda1:9092,external://localhost:19092
   #     - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
-  #     - --advertise-pandaproxy-addr internal://redpanda:8082,external://localhost:18082
+  #     - --advertise-pandaproxy-addr internal://redpanda1:8082,external://localhost:18082
   #     - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:18081
-  #     - --rpc-addr redpanda:33145
-  #     - --advertise-rpc-addr redpanda:33145
-  #     - --default-log-level=info
+  #     - --rpc-addr redpanda1:33145
+  #     - --advertise-rpc-addr redpanda1:33145
+  #     - --check=false
 
-  redpanda1:
-    image: redpandadata/redpanda:v23.1.17
-    ports:
-      - 19092:19092
-    command:
-      - redpanda
-      - start
-      - --smp 1
-      - --memory 1G
-      - --reserve-memory 0M
-      - --node-id 1
-      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
-      - --advertise-kafka-addr internal://redpanda1:9092,external://localhost:19092
-      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
-      - --advertise-pandaproxy-addr internal://redpanda1:8082,external://localhost:18082
-      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:18081
-      - --rpc-addr redpanda1:33145
-      - --advertise-rpc-addr redpanda1:33145
-      - --check=false
+  # redpanda2:
+  #   image: redpandadata/redpanda:v23.1.17
+  #   ports:
+  #     - 29092:29092
+  #   command:
+  #     - redpanda
+  #     - start
+  #     - --smp 1
+  #     - --memory 1G
+  #     - --reserve-memory 0M
+  #     - --node-id 2
+  #     - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:29092
+  #     - --advertise-kafka-addr internal://redpanda2:9092,external://localhost:29092
+  #     - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:28082
+  #     - --advertise-pandaproxy-addr internal://redpanda2:8082,external://localhost:28082
+  #     - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:28081
+  #     - --rpc-addr redpanda2:33146
+  #     - --advertise-rpc-addr redpanda2:33146
+  #     - --seeds "redpanda1:33145"
+  #     - --check=false
 
-  redpanda2:
-    image: redpandadata/redpanda:v23.1.17
-    ports:
-      - 29092:29092
-    command:
-      - redpanda
-      - start
-      - --smp 1
-      - --memory 1G
-      - --reserve-memory 0M
-      - --node-id 2
-      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:29092
-      - --advertise-kafka-addr internal://redpanda2:9092,external://localhost:29092
-      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:28082
-      - --advertise-pandaproxy-addr internal://redpanda2:8082,external://localhost:28082
-      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:28081
-      - --rpc-addr redpanda2:33146
-      - --advertise-rpc-addr redpanda2:33146
-      - --seeds "redpanda1:33145"
-      - --check=false
-
-  redpanda3:
-    image: redpandadata/redpanda:v23.1.17
-    ports:
-      - 39092:39092
-    command:
-      - redpanda
-      - start
-      - --smp 1
-      - --memory 1G
-      - --reserve-memory 0M
-      - --node-id 3
-      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:39092
-      - --advertise-kafka-addr internal://redpanda3:9092,external://localhost:39092
-      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:38082
-      - --advertise-pandaproxy-addr internal://redpanda3:8082,external://localhost:38082
-      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:38081
-      - --rpc-addr redpanda3:33147
-      - --advertise-rpc-addr redpanda3:33147
-      - --seeds "redpanda1:33145"
-      - --check=false
+  # redpanda3:
+  #   image: redpandadata/redpanda:v23.1.17
+  #   ports:
+  #     - 39092:39092
+  #   command:
+  #     - redpanda
+  #     - start
+  #     - --smp 1
+  #     - --memory 1G
+  #     - --reserve-memory 0M
+  #     - --node-id 3
+  #     - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:39092
+  #     - --advertise-kafka-addr internal://redpanda3:9092,external://localhost:39092
+  #     - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:38082
+  #     - --advertise-pandaproxy-addr internal://redpanda3:8082,external://localhost:38082
+  #     - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:38081
+  #     - --rpc-addr redpanda3:33147
+  #     - --advertise-rpc-addr redpanda3:33147
+  #     - --seeds "redpanda1:33145"
+  #     - --check=false
 
   redpanda-console:
-    image: redpandadata/console:v2.3.1
+    image: redpandadata/console:v2.3.8
     ports:
       - 8080:8080
     environment:
       CONFIG_FILEPATH: /tmp/config.yml
       CONSOLE_CONFIG_FILE: |
         kafka:
-          brokers: ["redpanda1:9092", "redpanda2:9092", "redpanda3:9092"]
+          brokers: ["redpanda:9092"]
           schemaRegistry:
             enabled: true
-            urls: ["http://redpanda1:8081", "http://redpanda2:8081", "http://redpanda3:8081"]
+            urls: ["http://redpanda:8081"]
         redpanda:
           adminApi:
             enabled: true
-            urls: ["http://redpanda1:9644", "http://redpanda2:9644", "http://redpanda3:9644"]
+            urls: ["http://redpanda:9644"]
     entrypoint: /bin/sh
     command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml; /app/console'
     depends_on:
-      - redpanda1
-      - redpanda2
-      - redpanda3
+      - redpanda
+      # - redpanda1
+      # - redpanda2
+      # - redpanda3
