@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:15.4-alpine3.18
+    environment:
+      - POSTGRES_DB=digger
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  digger:
+    image: ghcr.io/diggerhq/digger_backend:v0.3.13
+    environment:
+      - GITHUB_ORG=github_org
+      - HOSTNAME=public_hostname
+      - BEARER_AUTH_TOKEN=ACCESS_TOKEN
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/digger?sslmode=disable
+      - HTTP_BASIC_AUTH=1
+      - HTTP_BASIC_AUTH_USERNAME=admin
+      - HTTP_BASIC_AUTH_PASSWORD=admin
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data: {}
