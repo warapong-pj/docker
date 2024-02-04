@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  semaphore:
+    image: semaphoreui/semaphore:v2.9.45
+    environment:
+      - SEMAPHORE_DB_DIALECT=postgres
+      - SEMAPHORE_DB_HOST=postgres
+      - SEMAPHORE_DB_PORT=5432
+      - SEMAPHORE_DB_USER=postgres
+      - SEMAPHORE_DB_PASS=postgres
+      - SEMAPHORE_ADMIN_PASSWORD=changeme
+      - SEMAPHORE_ADMIN_NAME=admin
+      - SEMAPHORE_ADMIN_EMAIL=admin@localhost
+      - SEMAPHORE_ADMIN=admin
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    
+  postgres:
+    image: postgres:15.5-alpine3.18
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=semaphore
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: {}
