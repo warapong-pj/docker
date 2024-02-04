@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   dragonflydb:
     image: docker.dragonflydb.io/dragonflydb/dragonfly
