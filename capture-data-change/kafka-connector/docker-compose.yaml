@@ -22,6 +22,10 @@ services:
       # Replace CLUSTER_ID with a unique base64 UUID using "bin/kafka-storage.sh random-uuid"
       # See https://docs.confluent.io/kafka/operations-tools/kafka-tools.html#kafka-storage-sh
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+    ports:
+      - 9092:9092
+      - 9093:9093
+      - 29092:29092
 
   kafka2:
     image: confluentinc/cp-kafka:7.6.0
@@ -80,7 +84,7 @@ services:
       - kafka2
       - kafka3
 
-  kafka-connect:
+  connect:
     image: confluentinc/cp-kafka-connect:7.6.0
     environment:
       CONNECT_BOOTSTRAP_SERVERS: 'kafka1:29092,kafka2:29092,kafka3:29092'
@@ -104,5 +108,26 @@ services:
       # CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
     ports:
       - 8083:8083
+    volumes:
+      - kafka_data:/etc/kafka
+      - schema_registry_data:/etc/schema-registry
+      - connect_data:/etc/kafka-connect
     depends_on:
       - schema-registry
+
+  postgres:
+    # image: postgres:15.5-alpine3.18
+    image: debezium/example-postgres:1.9
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    # volumes:
+    #   - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: {}
+  kafka_data: {}
+  schema_registry_data: {}
+  connect_data: {}
