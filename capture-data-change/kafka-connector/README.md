@@ -12,5 +12,5 @@
 - confluent-hub install debezium/debezium-connector-postgresql:latest --no-prompt
 
 ### check message
-- kafka-topics --bootstrap-server kafka1:9092 --list
-- kafka-console-consumer --bootstrap-server kafka1:29092 --topic poc-pg-change.inventory.customers --from-beginning
+- kafka-topics --bootstrap-server localhost:9092 --list
+- kafka-console-consumer --bootstrap-server localhost:9092 --topic poc-pg-change.inventory.customers --from-beginning
