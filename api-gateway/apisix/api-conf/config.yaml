@@ -1,0 +1,12 @@
+deployment:
+  role: traditional
+  role_traditional:
+    config_provider: etcd
+  etcd:
+    host:
+      - http://etcd:2379
+  admin:
+    admin_key:
+      - name: admin
+        key: ${TOKEN_KEY}
+        role: admin
