@@ -1,4 +1,0 @@
-[submodule "airflow"]
-	path = airflow
-	url = git@github.com:warapong-pj/airflow.git
-	branch = main
