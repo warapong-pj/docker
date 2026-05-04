@@ -1,4 +1,11 @@
 services:
+  otel-collector:
+    image: otel/opentelemetry-collector:0.151.0
+    command:
+      - "--config=/etc/otel-collector.yaml"
+    volumes:
+      - ./otel-collector.yaml:/etc/otel-collector.yaml
+
   clickhouse:
     image: clickhouse/clickhouse-server:25.10.7.6-distroless
     environment:
