@@ -1,0 +1,7 @@
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:25.10.7.6-distroless
+    environment:
+    - CLICKHOUSE_PASSWORD=observability
+    ports:
+    - 8123:8123
